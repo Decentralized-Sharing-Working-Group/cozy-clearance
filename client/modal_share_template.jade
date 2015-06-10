@@ -23,6 +23,12 @@ else
 
   p
     span.public-url= t('or')
+    | &nbsp;#{t('modal shared micropub msg')}
+    input#micropub-input.form-control(type="text", placeholder=t('modal shared ' + type + ' custom micropub msg'), autocomplete="off")
+    a#share-micropub.btn.btn-cozy Publish
+
+  p
+    span.public-url= t('or')
     | &nbsp;#{t('modal shared with people msg')}
 
   form.input-group(role="form")

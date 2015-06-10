@@ -131,7 +131,9 @@ The client-side library use the following locale keys:
  - "modal question " + type + " shareable"
  - "modal send mails
  - "modal shared " + type + " custom msg"
+ - "modal shared " + type + " custom micropub msg"
  - "modal shared public link msg"
+ - "modal shared micropub msg"
  - "modal shared with people msg"
  - "no forgot"
  - "no"

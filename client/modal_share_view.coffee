@@ -55,6 +55,7 @@ module.exports = class CozyClearanceModal extends Modal
         'click #modal-dialog-share-save': 'onSave'
         'click .revoke': 'revoke'
         'click .show-link': 'showLink'
+        'click #share-micropub': 'onMicropubClicked'
         'click #add-contact': 'onAddClicked'
         'change select.changeperm': 'changePerm'
 
@@ -245,6 +246,9 @@ module.exports = class CozyClearanceModal extends Modal
         typeof(clearance) is "object" and clearance.length is 0
 
     ## Events
+
+    onMicropubClicked: ->
+        console.log('micropub ' + @$('#public-url').val()  + ' to '+ @$('#micropub-input').val())
 
     onAddClicked: ->
         @onGuestAdded @$('#share-input').val()
