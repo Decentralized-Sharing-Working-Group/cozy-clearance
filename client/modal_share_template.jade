@@ -5,6 +5,8 @@ div
         button.button.btn-cozy#share-public= t('shared')
         | &nbsp;
         button.button.btn-cozy#share-private= t('private')
+        | &nbsp;
+        button.button.btn-cozy#share-micropub= t('micropub')
   p &nbsp;
 
 // If no clearance are set, we consider it's a private object.
@@ -22,8 +24,9 @@ else
       p &nbsp;
 
   p
-    span.public-url= t('or')
-    | &nbsp;#{t('modal shared micropub msg')}
+    //span.public-url= t('or')
+    //| &nbsp;#{t('modal shared micropub msg')}
+    p= t('modal shared micropub msg')
     input#micropub-input.form-control(type="text", placeholder=t('modal shared ' + type + ' custom micropub msg'), autocomplete="off")
     a#share-micropub.btn.btn-cozy Publish
 
