@@ -5,11 +5,23 @@ div
         button.button.btn-cozy#share-public= t('shared')
         | &nbsp;
         button.button.btn-cozy#share-private= t('private')
+        | &nbsp;
+        button.button.btn-cozy#share-micropub= t('micropub')
   p &nbsp;
+
+
+div.micropub
+  t('modal shared micropub msg')
+  
+  input#micropub-input.form-control(type="text", placeholder=t('Enter the micropub url'), autocomplete="off")
+  a#indieauth.btn.btn-cozy Authenticate with indieauth
+  a#micropub.btn.btn-cozy Share
 
 // If no clearance are set, we consider it's a private object.
 if JSON.stringify(clearance) == '[]'
   p= t('only you can see')
+
+
 
 else
 
@@ -20,12 +32,6 @@ else
       else
           input#public-url(value=makeURL()).form-control.disabled
       p &nbsp;
-
-  p
-    span.public-url= t('or')
-    | &nbsp;#{t('modal shared micropub msg')}
-    input#micropub-input.form-control(type="text", placeholder=t('modal shared ' + type + ' custom micropub msg'), autocomplete="off")
-    a#share-micropub.btn.btn-cozy Publish
 
   p
     span.public-url= t('or')

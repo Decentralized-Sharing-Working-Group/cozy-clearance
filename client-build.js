@@ -27,9 +27,9 @@ require.register("cozy-clearance/contact_autocomplete", function(exports, requir
           return items.push({
             id: contact.id,
             hasPicture: contact.get('hasPicture'),
-            display: "" + (contact.get('name')) + " &lt;" + email + "&gt;",
+            display: (contact.get('name')) + " &lt;" + email + "&gt;",
             toString: function() {
-              return "" + email + ";" + contact.id;
+              return email + ";" + contact.id;
             }
           });
         });
@@ -77,15 +77,15 @@ require.register("cozy-clearance/contact_autocomplete", function(exports, requir
 
 require.register("cozy-clearance/contact_collection", function(exports, require, module){
   var Contact, collection,
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 collection = new Backbone.Collection();
 
 collection.url = 'clearance/contacts';
 
-collection.model = Contact = (function(_super) {
-  __extends(Contact, _super);
+collection.model = Contact = (function(superClass) {
+  extend(Contact, superClass);
 
   function Contact() {
     return Contact.__super__.constructor.apply(this, arguments);
@@ -137,15 +137,15 @@ module.exports = collection;
 
 require.register("cozy-clearance/modal", function(exports, require, module){
   var Modal,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
-Modal = (function(_super) {
-  __extends(Modal, _super);
+Modal = (function(superClass) {
+  extend(Modal, superClass);
 
   function Modal() {
-    this.closeOnEscape = __bind(this.closeOnEscape, this);
+    this.closeOnEscape = bind(this.closeOnEscape, this);
     return Modal.__super__.constructor.apply(this, arguments);
   }
 
@@ -298,8 +298,8 @@ require.register("cozy-clearance/modal_share_template", function(exports, requir
 var buf = [];
 var jade_mixins = {};
 var jade_interp;
-;var locals_for_with = (locals || {});(function (t, type, model, JSON, clearance, makeURL, undefined, Object, possible_permissions) {
-buf.push("<div><div id=\"select-mode-section\"><p>" + (jade.escape(null == (jade_interp = t('modal question ' + type + ' shareable', {name: model.get('name')})) ? "" : jade_interp)) + "</p><p><button id=\"share-public\" class=\"button btn-cozy\">" + (jade.escape(null == (jade_interp = t('shared')) ? "" : jade_interp)) + "</button>&nbsp;<button id=\"share-private\" class=\"button btn-cozy\">" + (jade.escape(null == (jade_interp = t('private')) ? "" : jade_interp)) + "</button></p></div><p>&nbsp;</p></div><!-- If no clearance are set, we consider it's a private object.-->");
+;var locals_for_with = (locals || {});(function (JSON, Object, clearance, makeURL, model, possible_permissions, t, type, undefined) {
+buf.push("<div><div id=\"select-mode-section\"><p>" + (jade.escape(null == (jade_interp = t('modal question ' + type + ' shareable', {name: model.get('name')})) ? "" : jade_interp)) + "</p><p><button id=\"share-public\" class=\"button btn-cozy\">" + (jade.escape(null == (jade_interp = t('shared')) ? "" : jade_interp)) + "</button>&nbsp;<button id=\"share-private\" class=\"button btn-cozy\">" + (jade.escape(null == (jade_interp = t('private')) ? "" : jade_interp)) + "</button>&nbsp;<button id=\"share-micropub\" class=\"button btn-cozy\">" + (jade.escape(null == (jade_interp = t('micropub')) ? "" : jade_interp)) + "</button></p></div><p>&nbsp;</p></div><div class=\"micropub\"><t modal shared micropub msg=\"modal shared micropub msg\"></t><input id=\"micropub-input\" type=\"text\"" + (jade.attr("placeholder", t('Enter the micropub url'), true, false)) + " autocomplete=\"off\" class=\"form-control\"/><a id=\"indieauth\" class=\"btn btn-cozy\">Authenticate with indieauth</a><a id=\"micropub\" class=\"btn btn-cozy\">Share</a></div><!-- If no clearance are set, we consider it's a private object.-->");
 if ( JSON.stringify(clearance) == '[]')
 {
 buf.push("<p>" + (jade.escape(null == (jade_interp = t('only you can see')) ? "" : jade_interp)) + "</p>");
@@ -448,17 +448,17 @@ buf.push("<a" + (jade.attr("data-key", key, true, false)) + (jade.attr("title", 
 
 }
 buf.push("</ul>");
-}}("t" in locals_for_with?locals_for_with.t:typeof t!=="undefined"?t:undefined,"type" in locals_for_with?locals_for_with.type:typeof type!=="undefined"?type:undefined,"model" in locals_for_with?locals_for_with.model:typeof model!=="undefined"?model:undefined,"JSON" in locals_for_with?locals_for_with.JSON:typeof JSON!=="undefined"?JSON:undefined,"clearance" in locals_for_with?locals_for_with.clearance:typeof clearance!=="undefined"?clearance:undefined,"makeURL" in locals_for_with?locals_for_with.makeURL:typeof makeURL!=="undefined"?makeURL:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined,"Object" in locals_for_with?locals_for_with.Object:typeof Object!=="undefined"?Object:undefined,"possible_permissions" in locals_for_with?locals_for_with.possible_permissions:typeof possible_permissions!=="undefined"?possible_permissions:undefined));;return buf.join("");
+}}.call(this,"JSON" in locals_for_with?locals_for_with.JSON:typeof JSON!=="undefined"?JSON:undefined,"Object" in locals_for_with?locals_for_with.Object:typeof Object!=="undefined"?Object:undefined,"clearance" in locals_for_with?locals_for_with.clearance:typeof clearance!=="undefined"?clearance:undefined,"makeURL" in locals_for_with?locals_for_with.makeURL:typeof makeURL!=="undefined"?makeURL:undefined,"model" in locals_for_with?locals_for_with.model:typeof model!=="undefined"?model:undefined,"possible_permissions" in locals_for_with?locals_for_with.possible_permissions:typeof possible_permissions!=="undefined"?possible_permissions:undefined,"t" in locals_for_with?locals_for_with.t:typeof t!=="undefined"?t:undefined,"type" in locals_for_with?locals_for_with.type:typeof type!=="undefined"?type:undefined,"undefined" in locals_for_with?locals_for_with.undefined:typeof undefined!=="undefined"?undefined:undefined));;return buf.join("");
 }
 module.exports = template;
   
 });
 
 require.register("cozy-clearance/modal_share_view", function(exports, require, module){
-  var CozyClearanceModal, Modal, clearanceDiff, contactCollection, contactTypeahead, randomString, request,
-  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
-  __hasProp = {}.hasOwnProperty,
-  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+  var CozyClearanceModal, Modal, clearanceDiff, contactCollection, contactTypeahead, randomString, request, request2,
+  bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  extend = function(child, parent) { for (var key in parent) { if (hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; },
+  hasProp = {}.hasOwnProperty;
 
 Modal = require("./modal");
 
@@ -504,20 +504,32 @@ request = function(method, url, data, options) {
   return $.ajax(_.extend(params, options));
 };
 
-module.exports = CozyClearanceModal = (function(_super) {
-  __extends(CozyClearanceModal, _super);
+request2 = function(method, url, data, options) {
+  var params;
+  params = {
+    method: method,
+    url: url,
+    dataType: 'json',
+    data: data,
+    contentType: 'application/json; charset=utf-8'
+  };
+  return $.ajax(_.extend(params, options));
+};
+
+module.exports = CozyClearanceModal = (function(superClass) {
+  extend(CozyClearanceModal, superClass);
 
   function CozyClearanceModal() {
-    this.onClose = __bind(this.onClose, this);
-    this.onYes = __bind(this.onYes, this);
-    this.onNo = __bind(this.onNo, this);
-    this.revoke = __bind(this.revoke, this);
-    this.onGuestAdded = __bind(this.onGuestAdded, this);
-    this.getClearanceWithContacts = __bind(this.getClearanceWithContacts, this);
-    this.existsEmail = __bind(this.existsEmail, this);
-    this.typeaheadFilter = __bind(this.typeaheadFilter, this);
-    this.makeURL = __bind(this.makeURL, this);
-    this.getRenderData = __bind(this.getRenderData, this);
+    this.onClose = bind(this.onClose, this);
+    this.onYes = bind(this.onYes, this);
+    this.onNo = bind(this.onNo, this);
+    this.revoke = bind(this.revoke, this);
+    this.onGuestAdded = bind(this.onGuestAdded, this);
+    this.getClearanceWithContacts = bind(this.getClearanceWithContacts, this);
+    this.existsEmail = bind(this.existsEmail, this);
+    this.typeaheadFilter = bind(this.typeaheadFilter, this);
+    this.makeURL = bind(this.makeURL, this);
+    this.getRenderData = bind(this.getRenderData, this);
     return CozyClearanceModal.__super__.constructor.apply(this, arguments);
   }
 
@@ -529,6 +541,9 @@ module.exports = CozyClearanceModal = (function(_super) {
     return _.extend(CozyClearanceModal.__super__.events.apply(this, arguments), {
       "click #share-public": "makePublic",
       "click #share-private": "makePrivate",
+      'click #share-micropub': "makeMicropub",
+      'click #indieauth': "indieAuth",
+      'click #micropub': "micropub",
       'click #modal-dialog-share-save': 'onSave',
       'click .revoke': 'revoke',
       'click .show-link': 'showLink',
@@ -561,7 +576,8 @@ module.exports = CozyClearanceModal = (function(_super) {
       clearance: this.getClearanceWithContacts(),
       makeURL: this.makeURL,
       possible_permissions: this.permissions(),
-      t: t
+      t: t,
+      isMicropub: this.isMicropub
     };
   };
 
@@ -581,11 +597,19 @@ module.exports = CozyClearanceModal = (function(_super) {
     this._checkToggleButtonState(clearance);
     this._configureTypeAhead(clearance);
     this._firstFocus(clearance);
+    if (this.isMicropub()) {
+      this.$('.public-url').hide();
+      $('.email-hint').hide();
+      $('.micropub').show();
+      return;
+    }
     if (this.isPublicClearance()) {
       this.$('.public-url').show();
-      return $('.email-hint').hide();
+      $('.email-hint').hide();
+      return $('.micropub').hide();
     } else {
       this.$('.public-url').hide();
+      $('.micropub').hide();
       if (this.isPrivateClearance()) {
         return $('.email-hint').hide();
       } else {
@@ -595,10 +619,14 @@ module.exports = CozyClearanceModal = (function(_super) {
   };
 
   CozyClearanceModal.prototype._checkToggleButtonState = function(clearance) {
-    if (typeof clearance === "object" && clearance.length === 0) {
+    if (this.isPrivateClearance) {
       return this.$('#share-private').addClass('toggled');
-    } else {
-      return this.$('#share-public').addClass('toggled');
+    } else if (this.isPublicClearance) {
+      if (this.isMicropub()) {
+        return this.$('#share-micropub').addClass('toggled');
+      } else {
+        return this.$('#share-public').addClass('toggled');
+      }
     }
   };
 
@@ -640,6 +668,13 @@ module.exports = CozyClearanceModal = (function(_super) {
     return this.refresh();
   };
 
+  CozyClearanceModal.prototype.makeMicropub = function() {
+    this.model.set({
+      micropub: true
+    });
+    return this.refresh();
+  };
+
   CozyClearanceModal.prototype.makePrivate = function() {
     if (this.isPublicClearance()) {
       this.lastClearance = this.model.get('clearance');
@@ -652,9 +687,13 @@ module.exports = CozyClearanceModal = (function(_super) {
 
   CozyClearanceModal.prototype.makeURL = function(key) {
     var url;
+    console.log('key : ' + key);
     url = this.model.getPublicURL();
     if (key) {
       url += '?key=' + key;
+    }
+    if (key) {
+      this.saveKey(key);
     }
     return url;
   };
@@ -747,6 +786,541 @@ module.exports = CozyClearanceModal = (function(_super) {
     var clearance;
     clearance = this.model.get('clearance');
     return typeof clearance === "object" && clearance.length === 0;
+  };
+
+  CozyClearanceModal.prototype.isMicropub = function() {
+    return this.model.get('micropub') === true;
+  };
+
+  CozyClearanceModal.prototype.onAddClicked = function() {
+    return this.onGuestAdded(this.$('#share-input').val());
+  };
+
+  CozyClearanceModal.prototype.onGuestAdded = function(result) {
+    var clearance, contactid, email, isEmailEmpty, key, perm, ref;
+    ref = result.split(';'), email = ref[0], contactid = ref[1];
+    isEmailEmpty = email === '' || email.indexOf('@') < 1;
+    if (!(this.existsEmail(email) || isEmailEmpty)) {
+      key = randomString();
+      perm = 'r';
+      if (this.isPublicClearance()) {
+        clearance = [];
+      } else {
+        clearance = this.model.get('clearance');
+      }
+      clearance.push({
+        contactid: contactid,
+        email: email,
+        key: key,
+        perm: perm
+      });
+      this.model.set({
+        clearance: clearance
+      });
+      return this.refresh();
+    } else {
+      return null;
+    }
+  };
+
+  CozyClearanceModal.prototype.revoke = function(event) {
+    var clearance;
+    clearance = this.model.get('clearance').filter(function(rule) {
+      return rule.key !== event.currentTarget.dataset.key;
+    });
+    if (clearance.length === 0) {
+      this.model.set({
+        clearance: 'public'
+      });
+    } else {
+      this.model.set({
+        clearance: clearance
+      });
+    }
+    return this.refresh();
+  };
+
+  CozyClearanceModal.prototype.changePerm = function(event) {
+    var select;
+    select = event.currentTarget;
+    this.model.get('clearance').filter(function(rule) {
+      return rule.key === select.dataset.key;
+    })[0].perm = select.options[select.selectedIndex].value;
+    return this.refresh();
+  };
+
+  CozyClearanceModal.prototype.onNo = function() {
+    var clearance, diffLength, diffNews, hasChanged;
+    clearance = this.model.get('clearance');
+    diffNews = clearanceDiff(clearance, this.initState).length !== 0;
+    diffLength = clearance.length !== this.initState.length;
+    hasChanged = diffNews || diffLength;
+    if (hasChanged) {
+      return Modal.confirm(t("confirm"), t('share confirm save'), t("yes"), t("no"), (function(_this) {
+        return function(confirmed) {
+          if (confirmed) {
+            return CozyClearanceModal.__super__.onNo.apply(_this, arguments);
+          }
+        };
+      })(this));
+    } else {
+      return CozyClearanceModal.__super__.onNo.apply(this, arguments);
+    }
+  };
+
+  CozyClearanceModal.prototype.onYes = function() {
+    var clearance, diffNews;
+    clearance = this.model.get('clearance');
+    diffNews = clearanceDiff(clearance, this.initState).length !== 0;
+    if (this.$('#share-input').val() && !diffNews) {
+      return Modal.confirm(t("confirm"), t('share forgot add'), t("no forgot"), t("yes forgot"), (function(_this) {
+        return function(confirmed) {
+          if (confirmed) {
+            return CozyClearanceModal.__super__.onYes.apply(_this, arguments);
+          }
+        };
+      })(this));
+    } else {
+      return CozyClearanceModal.__super__.onYes.apply(this, arguments);
+    }
+  };
+
+  CozyClearanceModal.prototype.onClose = function(saving) {
+    var newClearances, text;
+    if (!saving) {
+      return this.model.set({
+        clearance: this.initState
+      });
+    } else {
+      newClearances = clearanceDiff(this.model.get('clearance'), this.initState);
+      if (newClearances.length) {
+        text = t("send mails question") + newClearances.map(function(rule) {
+          return rule.email;
+        }).join(', ');
+        return Modal.confirm(t("modal send mails"), text, t("yes"), t("no"), (function(_this) {
+          return function(sendmail) {
+            return _this.doSave(sendmail, newClearances);
+          };
+        })(this));
+      } else {
+        return this.doSave(false);
+      }
+    }
+  };
+
+
+  /* Micropub */
+
+  CozyClearanceModal.prototype.indieAuth = function() {
+    var params;
+    this.model.set({
+      micropub: true
+    });
+    params = {
+      url: this.getMicropubURL,
+      id: this.model.id
+    };
+    return request2('GET', "clearance/indieauth", params, {
+      error: function(data, response) {
+        console.log('data : ' + JSON.stringify(data));
+        console.log('response : ' + JSON.stringify(response));
+        return Modal.error(t(JSON.stringify(response)));
+      },
+      success: (function(_this) {
+        return function(data) {
+          console.log('success data : ' + JSON.stringify(data));
+          return window.location.replace(data);
+        };
+      })(this)
+    });
+  };
+
+  CozyClearanceModal.prototype.micropub = function() {
+    return request2('GET', "clearance/photos", this.getKey(), {
+      error: function(data, response) {
+        return Modal.error(t(JSON.stringify(response)));
+      },
+      success: function(data) {
+        console.log('data : ' + JSON.stringify(data));
+        console.log('micropub go');
+        return request2('GET', "clearance/micropub", data, {
+          error: function(data, response) {
+            console.log('data : ' + JSON.stringify(data));
+            console.log('response : ' + JSON.stringify(response));
+            return Modal.error(t(JSON.stringify(response)));
+          },
+          success: (function(_this) {
+            return function(data) {
+              return console.log('success !');
+            };
+          })(this)
+        });
+      }
+    });
+  };
+
+  CozyClearanceModal.prototype.getMicropubURL = function() {
+    return this.$('#micropub-input').val();
+  };
+
+  CozyClearanceModal.prototype.getKey = function() {
+    console.log('key : ' + this.model.get('key'));
+    return {
+      key: this.model.get('key')
+    };
+  };
+
+  CozyClearanceModal.prototype.saveKey = function(key) {
+    console.log('key saved : ' + key);
+    return this.model.set({
+      key: key
+    });
+  };
+
+  return CozyClearanceModal;
+
+})(Modal);
+
+  
+});
+
+require.register("cozy-clearance/modal_share_view", function(exports, require, module){
+  // Generated by CoffeeScript 1.8.0
+var CozyClearanceModal, Modal, clearanceDiff, contactCollection, contactTypeahead, randomString, request, request2,
+  __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
+  __hasProp = {}.hasOwnProperty,
+  __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
+
+Modal = require("./modal");
+
+contactTypeahead = require("./contact_autocomplete");
+
+contactCollection = require("./contact_collection");
+
+randomString = function(length) {
+  var string;
+  if (length == null) {
+    length = 32;
+  }
+  string = "";
+  while (string.length < length) {
+    string += Math.random().toString(36).substr(2);
+  }
+  return string.substr(0, length);
+};
+
+clearanceDiff = function(now, old) {
+  if (now === 'public') {
+    return [];
+  }
+  if (old === 'public') {
+    return now;
+  }
+  return now.filter(function(rule) {
+    return !_.findWhere(old, {
+      key: rule.key
+    });
+  });
+};
+
+request = function(method, url, data, options) {
+  var params;
+  params = {
+    method: method,
+    url: url,
+    dataType: 'json',
+    data: JSON.stringify(data),
+    contentType: 'application/json; charset=utf-8'
+  };
+  return $.ajax(_.extend(params, options));
+};
+
+request2 = function(method, url, data, options) {
+  var params;
+  params = {
+    method: method,
+    url: url,
+    dataType: 'json',
+    data: data,
+    contentType: 'application/json; charset=utf-8'
+  };
+  return $.ajax(_.extend(params, options));
+};
+
+module.exports = CozyClearanceModal = (function(_super) {
+  __extends(CozyClearanceModal, _super);
+
+  function CozyClearanceModal() {
+    this.onClose = __bind(this.onClose, this);
+    this.onYes = __bind(this.onYes, this);
+    this.onNo = __bind(this.onNo, this);
+    this.revoke = __bind(this.revoke, this);
+    this.onGuestAdded = __bind(this.onGuestAdded, this);
+    this.getClearanceWithContacts = __bind(this.getClearanceWithContacts, this);
+    this.existsEmail = __bind(this.existsEmail, this);
+    this.typeaheadFilter = __bind(this.typeaheadFilter, this);
+    this.makeURL = __bind(this.makeURL, this);
+    this.getRenderData = __bind(this.getRenderData, this);
+    return CozyClearanceModal.__super__.constructor.apply(this, arguments);
+  }
+
+  CozyClearanceModal.prototype.id = 'cozy-clearance-modal';
+
+  CozyClearanceModal.prototype.template_content = require('./modal_share_template');
+
+  CozyClearanceModal.prototype.events = function() {
+    return _.extend(CozyClearanceModal.__super__.events.apply(this, arguments), {
+      "click #share-public": "makePublic",
+      "click #share-private": "makePrivate",
+      'click #share-micropub': "makeMicropub",
+      'click #indieauth': "indieAuth",
+      'click #micropub': "micropub",
+      'click #modal-dialog-share-save': 'onSave',
+      'click .revoke': 'revoke',
+      'click .show-link': 'showLink',
+      'click #add-contact': 'onAddClicked',
+      'change select.changeperm': 'changePerm'
+    });
+  };
+
+  CozyClearanceModal.prototype.permissions = function() {
+    return {
+      'r': t('r')
+    };
+  };
+
+  CozyClearanceModal.prototype.initialize = function(options) {
+    this.cb = this.onClose;
+    this.model = options.model;
+    this.model.set('clearance', this.model.get('clearance') || []);
+    this.initState = JSON.parse(JSON.stringify(this.model.get('clearance')));
+    this.title = t('sharing');
+    this.yes = t('save');
+    this.no = t('cancel');
+    return CozyClearanceModal.__super__.initialize.apply(this, arguments);
+  };
+
+  CozyClearanceModal.prototype.getRenderData = function() {
+    return {
+      type: this.model.get('type'),
+      model: this.model,
+      clearance: this.getClearanceWithContacts(),
+      makeURL: this.makeURL,
+      possible_permissions: this.permissions(),
+      t: t,
+      isMicropub: this.isMicropub
+    };
+  };
+
+  CozyClearanceModal.prototype.render = function() {
+    CozyClearanceModal.__super__.render.call(this);
+    $('.email-hint').remove();
+    return $('.modal-footer').prepend($("<span class='pull-left email-hint'>" + (t('send email hint')) + "</span>"));
+  };
+
+  CozyClearanceModal.prototype.renderContent = function() {
+    return $('<p>Please wait</p>');
+  };
+
+  CozyClearanceModal.prototype.afterRender = function() {
+    var clearance;
+    clearance = this.model.get('clearance') || [];
+    this._checkToggleButtonState(clearance);
+    this._configureTypeAhead(clearance);
+    this._firstFocus(clearance);
+    if (this.isMicropub()) {
+      this.$('.public-url').hide();
+      $('.email-hint').hide();
+      $('.micropub').show();
+      return;
+    }
+    if (this.isPublicClearance()) {
+      this.$('.public-url').show();
+      $('.email-hint').hide();
+      return $('.micropub').hide();
+    } else {
+      this.$('.public-url').hide();
+      $('.micropub').hide();
+      if (this.isPrivateClearance()) {
+        return $('.email-hint').hide();
+      } else {
+        return $('.email-hint').show();
+      }
+    }
+  };
+
+  CozyClearanceModal.prototype._checkToggleButtonState = function(clearance) {
+    if (this.isPrivateClearance) {
+      return this.$('#share-private').addClass('toggled');
+    } else if (this.isPublicClearance) {
+      if (this.isMicropub()) {
+        return this.$('#share-micropub').addClass('toggled');
+      } else {
+        return this.$('#share-public').addClass('toggled');
+      }
+    }
+  };
+
+  CozyClearanceModal.prototype._configureTypeAhead = function(clearance) {
+    var input;
+    if (typeof clearance !== "object" || clearance.length > 0) {
+      input = this.$('#share-input');
+      return contactTypeahead(input, this.onGuestAdded, this.typeaheadFilter);
+    }
+  };
+
+  CozyClearanceModal.prototype._firstFocus = function(clearance) {
+    return setTimeout((function(_this) {
+      return function() {
+        if (_this.isPublicClearance()) {
+          return _this.$('#public-url').focus().select();
+        } else if (clearance.length > 0) {
+          return _this.$('input#share-input').select();
+        }
+      };
+    })(this), 200);
+  };
+
+  CozyClearanceModal.prototype.refresh = function() {
+    this.$('.modal-body').html(this.template_content(this.getRenderData()));
+    return this.afterRender();
+  };
+
+  CozyClearanceModal.prototype.makePublic = function() {
+    if (this.lastClearance != null) {
+      this.model.set({
+        clearance: this.lastClearance
+      });
+    } else {
+      this.model.set({
+        clearance: 'public'
+      });
+    }
+    return this.refresh();
+  };
+
+  CozyClearanceModal.prototype.makeMicropub = function() {
+    this.model.set({
+      micropub: true
+    });
+    return this.refresh();
+  };
+
+  CozyClearanceModal.prototype.makePrivate = function() {
+    if (this.isPublicClearance()) {
+      this.lastClearance = this.model.get('clearance');
+      this.model.set({
+        clearance: []
+      });
+      return this.refresh();
+    }
+  };
+
+  CozyClearanceModal.prototype.makeURL = function(key) {
+    var url;
+    console.log('key : ' + key);
+    url = this.model.getPublicURL();
+    if (key) {
+      url += '?key=' + key;
+    }
+    if (key) {
+      this.saveKey(key);
+    }
+    return url;
+  };
+
+  CozyClearanceModal.prototype.typeaheadFilter = function(item) {
+    return !this.existsEmail(item.toString().split(';')[0]);
+  };
+
+  CozyClearanceModal.prototype.existsEmail = function(email) {
+    return _.some(this.model.get('clearance'), function(rule) {
+      return rule.email === email;
+    });
+  };
+
+  CozyClearanceModal.prototype.getClearanceWithContacts = function(clearance) {
+    if (clearance == null) {
+      clearance = this.model.get('clearance') || [];
+    }
+    if (typeof clearance === "object") {
+      clearance = clearance.map(function(rule) {
+        var out;
+        out = _.clone(rule);
+        if (out.contactid) {
+          out.contact = contactCollection.get(rule.contactid);
+        }
+        return out;
+      });
+    }
+    return clearance;
+  };
+
+  CozyClearanceModal.prototype.doSave = function(sendmail, clearances) {
+    return request('PUT', "clearance/" + this.model.id, this.saveData(), {
+      error: function() {
+        return Modal.error(t('server error occured'));
+      },
+      success: (function(_this) {
+        return function(data) {
+          _this.model.trigger('change', _this.model);
+          if (!sendmail) {
+            return _this.$el.modal('hide');
+          } else {
+            return request('POST', "clearance/" + _this.model.id + "/send", clearances, {
+              error: function(error, res) {
+                if (error.responseText.indexOf('postfix-') !== -1) {
+                  return Modal.error(t('postfix error'));
+                } else {
+                  return Modal.error(t('mail not sent'));
+                }
+              },
+              success: function(data) {
+                return _this.$el.modal('hide');
+              }
+            });
+          }
+        };
+      })(this)
+    });
+  };
+
+  CozyClearanceModal.prototype.saveData = function() {
+    return {
+      clearance: this.model.get('clearance')
+    };
+  };
+
+  CozyClearanceModal.prototype.showLink = function(event) {
+    var label, line, link, url, urlField;
+    line = $(event.target).parents('li');
+    if (line.find('.linkshow').length === 0) {
+      link = $(event.currentTarget);
+      url = link.prop('href');
+      line = $('<div class="linkshow">');
+      label = $('<label>').text(t('copy paste link'));
+      urlField = $('<input type="text">').val(url);
+      link.parents('li').append(line.append(label, urlField));
+      urlField.focus().select();
+      event.preventDefault();
+    } else {
+      line.find('.linkshow').remove();
+    }
+    return false;
+  };
+
+  CozyClearanceModal.prototype.isPublicClearance = function() {
+    return this.model.get('clearance') === 'public';
+  };
+
+  CozyClearanceModal.prototype.isPrivateClearance = function() {
+    var clearance;
+    clearance = this.model.get('clearance');
+    return typeof clearance === "object" && clearance.length === 0;
+  };
+
+  CozyClearanceModal.prototype.isMicropub = function() {
+    return this.model.get('micropub') === true;
   };
 
   CozyClearanceModal.prototype.onAddClicked = function() {
@@ -863,6 +1437,75 @@ module.exports = CozyClearanceModal = (function(_super) {
         return this.doSave(false);
       }
     }
+  };
+
+
+  /* Micropub */
+
+  CozyClearanceModal.prototype.indieAuth = function() {
+    var params;
+    this.model.set({
+      micropub: true
+    });
+    params = {
+      url: this.getMicropubURL,
+      id: this.model.id
+    };
+    return request2('GET', "clearance/indieauth", params, {
+      error: function(data, response) {
+        console.log('data : ' + JSON.stringify(data));
+        console.log('response : ' + JSON.stringify(response));
+        return Modal.error(t(JSON.stringify(response)));
+      },
+      success: (function(_this) {
+        return function(data) {
+          console.log('success data : ' + JSON.stringify(data));
+          return window.location.replace(data);
+        };
+      })(this)
+    });
+  };
+
+  CozyClearanceModal.prototype.micropub = function() {
+    return request2('GET', "clearance/photos", this.getKey(), {
+      error: function(data, response) {
+        return Modal.error(t(JSON.stringify(response)));
+      },
+      success: function(data) {
+        console.log('data : ' + JSON.stringify(data));
+        console.log('micropub go');
+        return request2('GET', "clearance/micropub", data, {
+          error: function(data, response) {
+            console.log('data : ' + JSON.stringify(data));
+            console.log('response : ' + JSON.stringify(response));
+            return Modal.error(t(JSON.stringify(response)));
+          },
+          success: (function(_this) {
+            return function(data) {
+              return console.log('success !');
+            };
+          })(this)
+        });
+      }
+    });
+  };
+
+  CozyClearanceModal.prototype.getMicropubURL = function() {
+    return this.$('#micropub-input').val();
+  };
+
+  CozyClearanceModal.prototype.getKey = function() {
+    console.log('key : ' + this.model.get('key'));
+    return {
+      key: this.model.get('key')
+    };
+  };
+
+  CozyClearanceModal.prototype.saveKey = function(key) {
+    console.log('key saved : ' + key);
+    return this.model.set({
+      key: key
+    });
   };
 
   return CozyClearanceModal;

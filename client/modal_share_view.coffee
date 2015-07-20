@@ -17,6 +17,7 @@ clearanceDiff = (now, old) ->
         return []
     if old is 'public'
         return now
+
     # return only rules that did not exist in init state
     return now.filter (rule) ->
         not _.findWhere old, key: rule.key
@@ -29,6 +30,16 @@ request = (method, url, data, options) ->
         url: url
         dataType: 'json'
         data: JSON.stringify(data)
+        contentType: 'application/json; charset=utf-8'
+    $.ajax _.extend params, options
+
+# convenient method for json requests
+request2 = (method, url, data, options) ->
+    params =
+        method: method
+        url: url
+        dataType: 'json'
+        data: data
         contentType: 'application/json; charset=utf-8'
     $.ajax _.extend params, options
 
@@ -52,10 +63,12 @@ module.exports = class CozyClearanceModal extends Modal
     events: -> _.extend super,
         "click #share-public": "makePublic"
         "click #share-private": "makePrivate"
+        'click #share-micropub': "makeMicropub"
+        'click #indieauth': "indieAuth"
+        'click #micropub': "micropub"
         'click #modal-dialog-share-save': 'onSave'
         'click .revoke': 'revoke'
         'click .show-link': 'showLink'
-        'click #share-micropub': 'onMicropubClicked'
         'click #add-contact': 'onAddClicked'
         'change select.changeperm': 'changePerm'
 
@@ -83,6 +96,8 @@ module.exports = class CozyClearanceModal extends Modal
         makeURL: @makeURL
         possible_permissions: @permissions()
         t: t
+        isMicropub: @isMicropub
+
 
     # TODO: find why it isn't displayed.
     render: ->
@@ -105,11 +120,18 @@ module.exports = class CozyClearanceModal extends Modal
         @_configureTypeAhead clearance
         @_firstFocus clearance
 
+        if @isMicropub()
+            @$('.public-url').hide()
+            $('.email-hint').hide()
+            $('.micropub').show()
+            return 
         if @isPublicClearance()
             @$('.public-url').show()
             $('.email-hint').hide()
+            $('.micropub').hide()
         else
             @$('.public-url').hide()
+            $('.micropub').hide()
             if @isPrivateClearance()
                 $('.email-hint').hide()
             else
@@ -117,10 +139,14 @@ module.exports = class CozyClearanceModal extends Modal
 
     # Change the toggled button state depending on current clearance.
     _checkToggleButtonState: (clearance) ->
-        if typeof(clearance) is "object" and clearance.length is 0
+        if @isPrivateClearance
             @$('#share-private').addClass 'toggled'
-        else
-            @$('#share-public').addClass 'toggled'
+        else if @isPublicClearance
+            if @isMicropub()
+                @$('#share-micropub').addClass 'toggled'
+            else
+                @$('#share-public').addClass 'toggled'
+            
 
     # Configure the contact field autocomplete type ahead.
     _configureTypeAhead: (clearance) ->
@@ -152,6 +178,10 @@ module.exports = class CozyClearanceModal extends Modal
             @model.set clearance:'public'
         @refresh()
 
+    makeMicropub: ->
+        @model.set micropub: true
+        @refresh()
+
     # Display the modal private mode.
     makePrivate: ->
         if @isPublicClearance()
@@ -164,8 +194,10 @@ module.exports = class CozyClearanceModal extends Modal
     # Build a clearance url for given key. Key is passed as a query parameter.
     # If no key is given, no parameter is set on the URL.
     makeURL: (key) =>
+        console.log 'key : ' + key
         url = @model.getPublicURL()
         url += '?key=' + key if key
+        @saveKey key if key
         return url
 
     # Display contact in the autocmplete combo only his email is not in the
@@ -245,10 +277,12 @@ module.exports = class CozyClearanceModal extends Modal
         clearance = @model.get('clearance')
         typeof(clearance) is "object" and clearance.length is 0
 
+    isMicropub: ->
+        @model.get('micropub') is true
+
     ## Events
 
-    onMicropubClicked: ->
-        console.log('micropub ' + @$('#public-url').val()  + ' to '+ @$('#micropub-input').val())
+    
 
     onAddClicked: ->
         @onGuestAdded @$('#share-input').val()
@@ -340,3 +374,43 @@ module.exports = class CozyClearanceModal extends Modal
             else
                 @doSave false
 
+    ### Micropub ###
+
+    indieAuth: ->
+        @model.set micropub: true #use it to remember the authentication
+
+        params = 
+            url: @getMicropubURL
+            id: @model.id
+
+         
+        request2 'GET', "clearance/indieauth", params,
+            error: (data, response) -> 
+                Modal.error t JSON.stringify (response)
+            success: (data) =>
+                window.location.replace data
+
+        #console.log('micropub ' + @$('#public-url').val()  + ' to '+ @$('#micropub-input').val())
+
+
+    micropub: ->
+        request2 'GET', "clearance/photos", @getKey(), 
+            error: (data, response) ->
+                Modal.error t JSON.stringify (response)
+            success: (data) ->
+                request2 'GET', "clearance/micropub",  data,
+                    error: (data, response) -> 
+                        Modal.error t JSON.stringify (response)
+                    success: (data) ->
+                        console.log 'success !' #data : ' + JSON.stringify data
+
+    getMicropubURL: ->
+        @$('#micropub-input').val()
+
+    getKey: () ->
+        console.log 'key : ' + @model.get 'key'
+        key: @model.get 'key'
+
+    saveKey: (key) ->
+        console.log 'key saved : ' + key
+        @model.set key: key
